@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>세미 경마</title>
+    <style>
+        #line {
+            width: 1100px;
+            border-right: solid 2px black;
+        }
+    </style>
+    <script>
+        var rank = [];
+        var timerId; // 전역변수로 선언해야 clearInterval이 먹힌다
+        var cnt = 0;
+        function start() {
+            rank = [];
+            cnt = 0;
+            document.getElementById("1").innerHTML='';
+            document.getElementById("2").innerHTML='';
+            document.getElementById("3").innerHTML='';
+            document.getElementById("4").innerHTML='';
+            document.getElementById("arima").style.display = 'none';
+            document.getElementById("uma1").style.marginLeft = '0px';
+            document.getElementById("uma2").style.marginLeft = '0px';
+            document.getElementById("uma3").style.marginLeft = '0px';
+            document.getElementById("uma4").style.marginLeft = '0px';
+            timerId = setInterval(game, 100);
+        }
+        function game() {
+            document.getElementById("uma1").style.marginLeft = parseInt(document.getElementById("uma1").style.marginLeft) + parseInt(Math.random() * 50) + 'px';
+            document.getElementById("uma2").style.marginLeft = parseInt(document.getElementById("uma2").style.marginLeft) + parseInt(Math.random() * 50) + 'px';
+            document.getElementById("uma3").style.marginLeft = parseInt(document.getElementById("uma3").style.marginLeft) + parseInt(Math.random() * 50) + 'px';
+            document.getElementById("uma4").style.marginLeft = parseInt(document.getElementById("uma4").style.marginLeft) + parseInt(Math.random() * 50) + 'px';
+            if (parseInt(document.getElementById("uma1").style.marginLeft) >= 1100) {
+                document.getElementById("uma1").style.marginLeft = '1110px';
+                if (!rank.includes("하루우라라")) {
+                    rank.push("하루우라라");
+                    cnt++;
+                    switch (cnt) { // 실시간으로 기록했으면 좋겠다 싶어서
+                        case 1:
+                            document.getElementById("1").innerHTML='하루우라라';
+                            break;
+                        case 2:
+                            document.getElementById("2").innerHTML='하루우라라';
+                            break;
+                        case 3:
+                            document.getElementById("3").innerHTML='하루우라라';
+                            break;
+                        default:
+                            document.getElementById("4").innerHTML='하루우라라';
+                            break;
+                    }
+                }
+            }
+            if (parseInt(document.getElementById("uma2").style.marginLeft) >= 1100) {
+                document.getElementById("uma2").style.marginLeft = '1110px';
+                if (!rank.includes("엘 콘도르 파사")) {
+                    rank.push("엘 콘도르 파사");
+                    cnt++;
+                    switch (cnt) {
+                        case 1:
+                            document.getElementById("1").innerHTML='엘 콘도르 파사';
+                            break;
+                        case 2:
+                            document.getElementById("2").innerHTML='엘 콘도르 파사';
+                            break;
+                        case 3:
+                            document.getElementById("3").innerHTML='엘 콘도르 파사';
+                            break;
+                        default:
+                            document.getElementById("4").innerHTML='엘 콘도르 파사';
+                            break;
+                    }
+                }
+            }
+            if (parseInt(document.getElementById("uma3").style.marginLeft) >= 1100) {
+                document.getElementById("uma3").style.marginLeft = '1110px';
+                if (!rank.includes("보드카")) {
+                    rank.push("보드카");
+                    cnt++;
+                    switch (cnt) {
+                        case 1:
+                            document.getElementById("1").innerHTML='보드카';
+                            break;
+                        case 2:
+                            document.getElementById("2").innerHTML='보드카';
+                            break;
+                        case 3:
+                            document.getElementById("3").innerHTML='보드카';
+                            break;
+                        default:
+                            document.getElementById("4").innerHTML='보드카';
+                            break;
+                    }
+                }
+            }
+            if (parseInt(document.getElementById("uma4").style.marginLeft) >= 1100) {
+                document.getElementById("uma4").style.marginLeft = '1110px';
+                if (!rank.includes("골드 쉽")) {
+                    rank.push("골드 쉽");
+                    cnt++;
+                    switch (cnt) {
+                        case 1:
+                            document.getElementById("1").innerHTML='골드 쉽';
+                            break;
+                        case 2:
+                            document.getElementById("2").innerHTML='골드 쉽';
+                            break;
+                        case 3:
+                            document.getElementById("3").innerHTML='골드 쉽';
+                            break;
+                        default:
+                            document.getElementById("4").innerHTML='골드 쉽';
+                            break;
+                    }
+                }
+            }
+            if (rank.length == 4) {
+                clearInterval(timerId);
+                document.getElementById("arima").style.display = 'inline';
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="start()" id="arima">start</button><br>
+    <div id="line">
+        <img src="/img/umaMusume/haruurara.jpg" id="uma1" width="100" height="80"><br>
+        <img src="/img/umaMusume/el.jpg" id="uma2" width="100" height="80"><br>
+        <img src="/img/umaMusume/vodka.jpg" id="uma3" width="100" height="80"><br>
+        <img src="/img/umaMusume/gorusi.jpg" id="uma4" width="100" height="80"><br>
+        <!-- 이미지 배경투명화하고 싶다 -->
+    </div>
+    <div id="res">
+        1착 : <span id="1"></span><br>
+        2착 : <span id="2"></span><br>
+        3착 : <span id="3"></span><br>
+        4착 : <span id="4"></span><br>
+    </div>
+</body>
+</html>
