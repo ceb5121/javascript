@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>라이스샤워의 미로 탈출</title>
+    <style>
+        img {
+            width:45px;
+            height: 45px;
+        }
+        td {
+            width: 50px;
+            height: 50px;
+        }
+
+        table {
+            border-spacing: 0px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        var map = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 2],
+            [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1],
+            [1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],
+            [1, 3, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ];
+        function madeTable(y, x) {
+            var str = '';
+            str += "<table>";
+            for (var i = 0; i < y; i++) {
+                str += '<tr>';
+                for (var j = 0; j < x; j++) {
+                    str += `<td id="y${i}x${j}"></td>`;
+                }
+                str += '</tr>';
+            }
+            str += "</table>";
+            return str;
+        }
+        function colorArray(arr) {
+            document.body.innerHTML = madeTable(arr.length, arr[0].length);
+            for (var y = 0; y < arr.length; y++) {
+                for (var x = 0; x < arr[0].length; x++) {
+                    switch (arr[y][x]) {
+                        case 0:
+                            document.getElementById("y" + y + "x" + x).setAttribute("bgcolor", "white");
+                            break;
+                        case 1:
+                            document.getElementById("y" + y + "x" + x).setAttribute("bgcolor", "brown");
+                            break;
+                        case 2:
+                            document.getElementById("y" + y + "x" + x).setAttribute("bgcolor", "yellow");
+                            break;
+                        case 3:
+                            document.getElementById("y" + y + "x" + x).innerHTML = "<img src='/img/umaMusume/rice.jpg'>";
+                            break;
+                    }
+                }
+            }
+        }
+        function isMove(y, x) {
+            if (map[y][x] == 1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        function replay() {
+            document.getElementById("y" + unity + "x" + unitx).innerHTML = "";
+            unitx=replayX.shift();
+            unity=replayY.shift();
+            document.getElementById("y" + unity + "x" + unitx).innerHTML = "<img src='/umamusume/rice.jpg'>";
+            if(replayX.length==0) {
+                clearInterval(replayTime);
+                alert('Replay 종료');
+            }
+        }
+        var unitx = 1;
+        var unity = 13;
+        var endx = 14;
+        var endy = 1;
+        var replayX=[];
+        var replayY=[];
+        var replayTime;
+        window.onload = function () {
+            colorArray(map);
+            replayX.push(unitx);
+            replayY.push(unity);
+            document.body.onkeypress = function () {
+                switch (event.keyCode) {
+                    case 56:
+                        if (isMove(unity - 1, unitx)) {
+                            document.getElementById("y" + unity + "x" + unitx).innerHTML = "";
+                            unity--;
+                            document.getElementById("y" + unity + "x" + unitx).innerHTML = "<img src='/img/umaMusume/rice.jpg'>";
+                        }
+                        break;
+                    case 54:
+                        if (isMove(unity, unitx + 1)) {
+                            document.getElementById("y" + unity + "x" + unitx).innerHTML = "";
+                            unitx++;
+                            document.getElementById("y" + unity + "x" + unitx).innerHTML = "<img src='/img/umaMusume/rice.jpg'>";
+                        }
+                        break;
+                    case 52:
+                        if (isMove(unity, unitx - 1)) {
+                            document.getElementById("y" + unity + "x" + unitx).innerHTML = "";
+                            unitx--;
+                            document.getElementById("y" + unity + "x" + unitx).innerHTML = "<img src='/img/umaMusume/rice.jpg'>";
+                        }
+                        break;
+                    case 50:
+                        if (isMove(unity + 1, unitx)) {
+                            document.getElementById("y" + unity + "x" + unitx).innerHTML = "";
+                            unity++;
+                            document.getElementById("y" + unity + "x" + unitx).innerHTML = "<img src='/img/umaMusume/rice.jpg'>";
+                        }
+                        break;
+                }
+                replayX.push(unitx);
+                replayY.push(unity);
+                if (unitx == endx && unity == endy) {
+                    alert('탈출 성공!');
+                    replayTime=setInterval(replay,500);                  
+                }
+            }
+        }
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
