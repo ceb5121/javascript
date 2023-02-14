@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트에 사용한 메뉴 슬라이드</title>
+    <style>
+        #menu,
+        #menu ul {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+
+        ul#menu {
+            width: 200px;
+            text-indent: 35px;
+        }
+
+        ul.sub li {
+            background-color: rgba(91, 189, 91, 0.582);
+            line-height: 35px;
+            margin-bottom: 2px;
+        }
+
+        ul.sub li:hover {
+            background-color: rgb(137, 192, 194);
+        }
+
+        ul.sub li a {
+            display: block;
+            text-decoration: none;
+            color: rgba(134, 98, 131, 0.856)
+        }
+
+        #menu>li>div {
+            margin-bottom: 2px;
+            height: 35px;
+            line-height: 35px;
+            background-color: rgba(130, 114, 219, 0.822);
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"> </script>
+    <script>
+        var selectDiv=$("menu>li>div").eq(0);
+        $(function () {
+            $(".sub").hide();   // sub 클래스(하위메뉴) 전체 가리기
+            $("#menu>li>div").on("mouseenter",function(){
+                $(".sub").stop().slideUp(300); //hover 상태 sub만 표시
+                $(this).next().stop().slideDown(300);
+            })
+            $("#menu>li>div").on("click",function(){
+                selectDiv=$(this);
+            })
+            $("#menu").on("mouseleave",function(){
+                $(".sub").stop().slideUp(300);
+                setTimeout(function(){                    
+                    selectDiv.next().stop().slideDown(300);            
+                },3000);    // 클릭한 div가 있으면 hover 종료 3초 후 표시
+            })
+        })
+    </script>
+</head>
+<body>
+    <ul id="menu">
+        <li>
+            <div>title</div>
+            <ul class="sub">
+                <li><a href="#">sub1</a></li>
+                <li><a href="#">sub2</a></li>
+                <li><a href="#">sub3</a></li>
+            </ul>
+        </li>
+        <li>
+            <div>title</div>
+            <ul class="sub">
+                <li><a href="#">sub1</a></li>
+                <li><a href="#">sub2</a></li>
+            </ul>
+        </li>
+        <li>
+            <div>title</div>
+            <ul class="sub">
+                <li><a href="#">sub1</a></li>
+                <li><a href="#">sub2</a></li>
+                <li><a href="#">sub3</a></li>
+                <li><a href="#">sub4</a></li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
